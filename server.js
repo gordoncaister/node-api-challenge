@@ -9,7 +9,7 @@ server.use(express.json());
 const actionsRouter = require("./routers/actionRouter")
 const projectsRouter = require("./routers/projectRouter")
 
-server.use('/api/projects',logger,actionsRouter)
+server.use('/api/actions',logger,actionsRouter)
 server.use('/api/projects',logger,projectsRouter)
 
 server.get('/', (req, res) => {
