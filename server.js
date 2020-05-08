@@ -1,6 +1,6 @@
 const express = require('express');
 const helmet = require('helmet'); 
-// const cors = require("cors")
+const cors = require("cors")
 
 const server = express();
 
@@ -8,8 +8,8 @@ const projectRouter = require("./routers/projectRouter");
 const actionRouter = require("./routers/actionRouter");
 
 server.use(express.json());
-// server.use(helmet())
-// server.use(cors())
+server.use(helmet())
+server.use(cors())
 
 
 server.use('/api/projects',logger,projectRouter);
