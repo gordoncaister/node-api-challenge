@@ -19,7 +19,7 @@ router.get("/", validateProjectId,(req,res)=>{
 })
 
 router.get("/:id", validateProjectId,(req,res)=>{
-    Projects.get()
+    Projects.get(req.params.id)
         .then(project => {
             res.status(201).json(project)
         })
@@ -36,6 +36,52 @@ router.post("/",validateProject,(req,res)=>{
         .catch(()=>{
             res.status(500).json({error: "Database error while creating project"})
         })
+})
+
+router.delete("/:id",validateProjectId,(req,res)=>{
+    Projects.remove(req.params.id)
+        .then((success)=>{
+            res.status(200).json({message: `Project ${req.params.id} was successfully deleted`})
+        })
+        .catch(()=>{
+            res.status(500).json({error: "Database error while deleting project"})
+        })
+    
+})
+
+router.put("/:id",validateProjectId,(req,res)=>{
+
+    Projects.get(req.params.id)
+        .then((project)=>{
+            let newProject = {
+                id: project.id,
+                name: project.name,
+                description: project.description,
+                completed: project.completed 
+            }
+            if(req.body.name && req.body.name != newProject.name) {
+                newProject.name=req.body.name
+            } else if(req.body.description && req.body.description != newProject.description) {
+                console.log(req.body.description)
+                newProject.description=req.body.description
+            }  else if(req.body.completed && req.body.completed != newProject.completed){
+                newProject.completed=req.body.completed
+            }
+            
+            Projects.update(req.params.id,newProject)
+                .then(updatedProj => {
+                    res.status(201).json(updatedProj);
+                })
+                .catch(error=>{
+                    res.status(500).json({error:"error while updating project"})
+                })
+
+        })
+        .catch(error=>{
+            res.status(500).json({error:"error while updating project"})
+        })
+
+    
 })
 
 
