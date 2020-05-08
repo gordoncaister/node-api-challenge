@@ -17,4 +17,19 @@ router.get("/",(req,res)=>{
         })
 })
 
+router.get('/:id', (req, res) => {
+    Actions.get(req.params.id)
+      .then(action => {
+        
+        if (!action) {
+            res.status(400).json({message: "No action by that id was found"})
+        } else {
+            res.status(200).json(action)
+        }
+      })
+      .catch(error => {
+        res.status(500).json({error: "There was an error retrieving the action"})
+      })  
+  })
+
 module.exports = router;
