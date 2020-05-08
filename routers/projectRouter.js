@@ -28,6 +28,30 @@ router.get("/:id", validateProjectId,(req,res)=>{
         })
 })
 
+router.post("/",validateProject,(req,res)=>{
+    Projects.insert(req.body)
+        .then((project)=>{
+            res.status(201).json(project)
+        })
+        .catch(()=>{
+            res.status(500).json({error: "Database error while creating project"})
+        })
+})
+
+
+function validateProject (req,res,next){
+    if(!req.body){
+        res.status(401).json({message: "Missing project body"})
+    } else if (!req.body.name){
+        res.status(401).json({message: "Missing project name"})
+    } else if (!req.body.description){
+        res.status(401).json({message: "Missing project description"})
+    } else if (!req.body.completed){
+        res.status(401).json({message: "Missing project completion status"})
+    } else {
+        next();
+    }
+}
 
 function validateProjectId(req,res,next){
     Projects.get(req.params.id)
