@@ -3,13 +3,9 @@ import React from "react"
 const Projects = ({project}) => {
   return(
     <article>
-      <p>{project.name}</p>
+      <h3>{project.name}</h3>
       <p>{project.description}</p>
-      <ul>
-          {project.actions.map((action,i)=>(
-              <li>{action.description}</li>
-              ))}
-      </ul>
+      
     </article>
   )
 }

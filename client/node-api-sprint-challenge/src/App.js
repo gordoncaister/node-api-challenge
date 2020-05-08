@@ -25,16 +25,21 @@ function App() {
     ]
 }])
 
-  useEffect(()=>{
+const [refresh, setRefresh] =useState(false)
+
+console.log("projects",projects)
+
+useEffect(()=>{
     axios.get("http://localhost:5000/api/projects")
     .then(result=>{
-      setProjects(result)
+      console.log(result.data)
+      setProjects(result.data)
     })
     .catch(err => {
       console.log(err)
     })
-  },[])
-
+  },[refresh])
+  console.log(projects)
   return (
     <div className="App">
      {projects.map((project, i)=> (
