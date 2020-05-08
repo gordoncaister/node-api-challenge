@@ -1,16 +1,19 @@
 const express = require('express');
+const helmet = require('helmet'); 
+// const cors = require("cors")
 
 const server = express();
 
-server.use(express.json())
+const projectRouter = require("./routers/projectRouter");
+const actionRouter = require("./routers/actionRouter");
 
 server.use(express.json());
+// server.use(helmet())
+// server.use(cors())
 
-const actionsRouter = require("./routers/actionRouter")
-const projectsRouter = require("./routers/projectRouter")
 
-server.use('/api/actions',logger,actionsRouter)
-server.use('/api/projects',logger,projectsRouter)
+server.use('/api/projects',logger,projectRouter);
+server.use('/api/actions',logger,actionRouter);
 
 server.get('/', (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`);
