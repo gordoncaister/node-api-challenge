@@ -97,9 +97,7 @@ function validateProject (req,res,next){
         res.status(401).json({message: "Missing project name"})
     } else if (!req.body.description){
         res.status(401).json({message: "Missing project description"})
-    } else if (!req.body.completed){
-        res.status(401).json({message: "Missing project completion status"})
-    } else {
+    }  else {
         next();
     }
 }
