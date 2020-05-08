@@ -53,20 +53,27 @@ router.put("/:id",validateProjectId,(req,res)=>{
 
     Projects.get(req.params.id)
         .then((project)=>{
+
             let newProject = {
                 id: project.id,
                 name: project.name,
                 description: project.description,
-                completed: project.completed 
+                completed: project.completed
             }
+
+
             if(req.body.name && req.body.name != newProject.name) {
                 newProject.name=req.body.name
             } else if(req.body.description && req.body.description != newProject.description) {
-                console.log(req.body.description)
                 newProject.description=req.body.description
             }  else if(req.body.completed && req.body.completed != newProject.completed){
                 newProject.completed=req.body.completed
+            } else {
+                res.status(401).json({message: "Please make changes to the project before updating"})
+                return;
             }
+
+            
             
             Projects.update(req.params.id,newProject)
                 .then(updatedProj => {
